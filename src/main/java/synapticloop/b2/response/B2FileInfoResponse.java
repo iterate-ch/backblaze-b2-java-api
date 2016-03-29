@@ -1,7 +1,11 @@
 package synapticloop.b2.response;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 /*
- * Copyright (c) 2016 Synapticloop.
+ * Copyright (c) 2016 synapticloop.
  * 
  * All rights reserved.
  * 
@@ -19,12 +23,9 @@ package synapticloop.b2.response;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import synapticloop.b2.Action;
 import synapticloop.b2.exception.B2ApiException;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 public class B2FileInfoResponse extends BaseB2Response {
 	private static final Logger LOGGER = LoggerFactory.getLogger(B2FileInfoResponse.class);
@@ -75,7 +76,11 @@ public class B2FileInfoResponse extends BaseB2Response {
 			}
 			catch(IllegalArgumentException e) {
 				LOGGER.warn("Unknown action value " + action);
+				this.action = null;
 			}
+		} else {
+			// Default
+			this.action = Action.upload;
 		}
 
 		this.size = this.readLong(B2ResponseProperties.KEY_SIZE);
@@ -137,7 +142,7 @@ public class B2FileInfoResponse extends BaseB2Response {
 	/**
 	 * @return The number of bytes in the file.
 	 */
-	public Long getSize() { return this.size; }
+	public long getSize() { return this.size; }
 
 	/**
 	 * Return the timestamp that the file was uploaded
