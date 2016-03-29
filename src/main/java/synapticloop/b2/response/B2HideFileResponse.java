@@ -45,17 +45,14 @@ public class B2HideFileResponse extends BaseB2Response {
 		this.fileId = this.readString(B2ResponseProperties.KEY_FILE_ID);
 		this.fileName = this.readString(B2ResponseProperties.KEY_FILE_NAME);
 
-		final String action = this.readString(B2ResponseProperties.KEY_ACTION);
+		String action = this.readString(B2ResponseProperties.KEY_ACTION);
 		if(null != action) {
 			try {
 				this.action = Action.valueOf(action);
 			}
 			catch(IllegalArgumentException e) {
 				LOGGER.warn("Unknown action value " + action);
-				this.action = null;
 			}
-		} else {
-			this.action = null;
 		}
 
 		this.size = this.readInt(B2ResponseProperties.KEY_SIZE);
