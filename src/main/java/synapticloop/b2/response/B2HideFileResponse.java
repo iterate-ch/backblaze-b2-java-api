@@ -19,22 +19,6 @@ package synapticloop.b2.response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/*
- * Copyright (c) 2016 Synapticloop.
- * 
- * All rights reserved.
- * 
- * This code may contain contributions from other parties which, where 
- * applicable, will be listed in the default build file for the project 
- * ~and/or~ in a file named CONTRIBUTORS.txt in the root of the project.
- * 
- * This source code and any derived binaries are covered by the terms and 
- * conditions of the Licence agreement ("the Licence").  You may not use this 
- * source code or any derived binaries except in compliance with the Licence.  
- * A copy of the Licence is available in the file named LICENSE.txt shipped with 
- * this source code or binaries.
- */
-
 import synapticloop.b2.Action;
 import synapticloop.b2.exception.B2ApiException;
 
@@ -43,7 +27,7 @@ public class B2HideFileResponse extends BaseB2Response {
 
 	private final String fileId;
 	private final String fileName;
-	private final Action action;
+	private Action action;
 	private final Integer size;
 	private final Long uploadTimestamp;
 
@@ -61,17 +45,14 @@ public class B2HideFileResponse extends BaseB2Response {
 		this.fileId = this.readString(B2ResponseProperties.KEY_FILE_ID);
 		this.fileName = this.readString(B2ResponseProperties.KEY_FILE_NAME);
 
-		final String action = this.readString(B2ResponseProperties.KEY_ACTION);
+		String action = this.readString(B2ResponseProperties.KEY_ACTION);
 		if(null != action) {
 			try {
 				this.action = Action.valueOf(action);
 			}
 			catch(IllegalArgumentException e) {
 				LOGGER.warn("Unknown action value " + action);
-				this.action = null;
 			}
-		} else {
-			this.action = null;
 		}
 
 		this.size = this.readInt(B2ResponseProperties.KEY_SIZE);
