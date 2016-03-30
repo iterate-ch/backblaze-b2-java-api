@@ -134,7 +134,7 @@ public class B2FileResponse extends BaseB2Response {
 
 	/**
 	 * Return the upload timestamp for this file
-	 * 
+	 *
 	 * @return the upload timestamp fot this file
 	 */
 	public Long getUploadTimestamp() { return this.uploadTimestamp; }
@@ -158,8 +158,8 @@ public class B2FileResponse extends BaseB2Response {
 	}
 
 	/**
-	 * Get the action that was performed on the 
-	 * 
+	 * Get the action that was performed on the
+	 *
 	 * @return the action that was performed
 	 */
 	public Action getAction() {
