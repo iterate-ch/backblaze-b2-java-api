@@ -22,8 +22,6 @@ public class B2ListFileNamesRequestTest {
 		assertNull(b2ListFilesResponse.getNextFileId());
 		assertNull(b2ListFilesResponse.getNextFileName());
 
-		new B2DeleteBucketRequest(HttpClients.createDefault(), b2AuthorizeAccountResponse, b2BucketResponse.getBucketId()).getResponse();
-
 		B2TestHelper.deleteBucket(b2BucketResponse.getBucketId());
 	}
 }
