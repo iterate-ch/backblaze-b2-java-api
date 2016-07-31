@@ -1,7 +1,15 @@
 package synapticloop.b2.request;
 
+import static org.junit.Assert.*;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.http.impl.client.HttpClients;
 import org.junit.Test;
+
 import synapticloop.b2.exception.B2ApiException;
 import synapticloop.b2.helper.B2TestHelper;
 import synapticloop.b2.response.B2BucketResponse;
@@ -9,13 +17,6 @@ import synapticloop.b2.response.B2DeleteFileVersionResponse;
 import synapticloop.b2.response.B2FileResponse;
 import synapticloop.b2.response.B2GetUploadUrlResponse;
 import synapticloop.b2.util.ChecksumHelper;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
 
 
 public class B2UploadAndDeleteFileRequestTest {
@@ -78,7 +79,6 @@ public class B2UploadAndDeleteFileRequestTest {
 
 		B2TestHelper.deleteBucket(privateBucket.getBucketId());
 	}
-
 	@Test
 	public void testFileUploadWithInfo() throws Exception {
 		B2BucketResponse privateBucket = B2TestHelper.createRandomPrivateBucket();

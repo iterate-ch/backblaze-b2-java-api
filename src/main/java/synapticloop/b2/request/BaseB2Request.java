@@ -1,5 +1,7 @@
 package synapticloop.b2.request;
 
+import static org.apache.http.entity.ContentType.*;
+
 /*
  * Copyright (c) 2016 Synapticloop.
  *
