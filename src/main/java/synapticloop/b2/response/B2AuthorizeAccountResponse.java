@@ -28,7 +28,9 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 	private final String apiUrl;
 	private final String authorizationToken;
 	private final String downloadUrl;
-	private final int minimumPartSize;
+	private final Long minimumPartSize;
+	private final Long recommendedPartSize;
+	private final Long absoluteMinimumPartSize;
 	/**
 	 * Instantiate an authorize account response with the JSON response as a 
 	 * string from the API call.  This response is then parsed into the 
@@ -45,7 +47,9 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 		this.apiUrl = this.readString(B2ResponseProperties.KEY_API_URL);
 		this.authorizationToken = this.readString(B2ResponseProperties.KEY_AUTHORIZATION_TOKEN);
 		this.downloadUrl = this.readString(B2ResponseProperties.KEY_DOWNLOAD_URL);
-		this.minimumPartSize = this.readInt(B2ResponseProperties.KEY_MINIMUM_PART_SIZE);
+		this.minimumPartSize = this.readLong(B2ResponseProperties.KEY_MINIMUM_PART_SIZE);
+		this.recommendedPartSize = this.readLong(B2ResponseProperties.KEY_RECOMMENDED_PART_SIZE);
+		this.absoluteMinimumPartSize = this.readLong(B2ResponseProperties.KEY_ABSOLUTE_MINIMUM_PART_SIZE);
 
 		this.warnOnMissedKeys();
 	}
@@ -86,8 +90,23 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 	 * get the number here, rather than use a hard-coded constant.
 	 * 
 	 * @return the minimum part size for downloads
+	 * @deprecated This field will always have the same value as recommendedPartSize. Use recommendedPartSize instead
 	 */
-	public int getMinimumPartSize() {return this.minimumPartSize; }
+	@Deprecated
+	public Long getMinimumPartSize() { return this.minimumPartSize; }
+
+	/**
+	 * The recommended size for each part of a large file. We recommend using this part size for optimal upload performance.
+	 * @return recommended part size for a large file
+	 */
+	public Long getRecommendedPartSize() { return recommendedPartSize; }
+
+	/**
+	 * The smallest possible size of a part of a large file (except the last one). This is smaller than the recommendedPartSize.
+	 * If you use it, you may find that it takes longer overall to upload a large file.
+	 * @return smallest possible size of a part of a large file
+	 */
+	public Long getAbsoluteMinimumPartSize() { return absoluteMinimumPartSize; }
 
 	@Override
 	protected Logger getLogger() { return LOGGER; }
