@@ -57,7 +57,7 @@ public class B2UploadPartRequestTest {
 			fail();
 		} catch (B2ApiException e) {
 			assertEquals(400, e.getStatus());
-			assertEquals("Part number 1 is smaller than 100000000 bytes", e.getMessage());
+			assertEquals("Part number 1 is smaller than 5000000 bytes", e.getMessage());
 		}
 
 		final B2FileResponse b2FileResponse = new B2CancelLargeFileRequest(client, b2AuthorizeAccountResponse,
