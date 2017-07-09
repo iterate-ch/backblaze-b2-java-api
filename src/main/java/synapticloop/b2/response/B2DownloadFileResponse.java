@@ -58,7 +58,6 @@ public class B2DownloadFileResponse {
 		ignoredHeaders.add(B2ResponseHeaders.HEADER_X_BZ_UPLOAD_TIMESTAMP.toLowerCase(Locale.ENGLISH));
 	}
 
-	private final InputStream stream;
 	private final Long contentLength;
 	private final String contentType;
 	private final String fileId;
@@ -67,6 +66,7 @@ public class B2DownloadFileResponse {
 	private final String uploadTimestamp;
 
 	private final Map<String, String> fileInfo = new HashMap<String, String>();
+	private final CloseableHttpResponse response;
 
 	/**
 	 * Instantiate a bucket response with the JSON response as a string from 
@@ -75,23 +75,15 @@ public class B2DownloadFileResponse {
 	 * @param response The HTTP response object
 	 * 
 	 * @throws B2ApiException if there was an error parsing the response
-	 * @throws IOException if there was an error communicating with the API service
 	 */
-	public B2DownloadFileResponse(CloseableHttpResponse response) throws B2ApiException, IOException {
-		if(null != response.getEntity()) {
-			stream = new HttpMethodReleaseInputStream(response);
-		} else {
-			// HEAD responses do not have an entity
-			stream = new NullInputStream(0L);
-			EntityUtils.consume(response.getEntity());
-		}
-
-		contentLength = Long.parseLong(response.getFirstHeader(HttpHeaders.CONTENT_LENGTH).getValue());
-		contentType = response.getFirstHeader(HttpHeaders.CONTENT_TYPE).getValue();
-		contentSha1 = response.getFirstHeader(B2ResponseHeaders.HEADER_X_BZ_CONTENT_SHA1).getValue();
-		fileId = response.getFirstHeader(B2ResponseHeaders.HEADER_X_BZ_FILE_ID).getValue();
-		fileName = response.getFirstHeader(B2ResponseHeaders.HEADER_X_BZ_FILE_NAME).getValue();
-		uploadTimestamp = response.getFirstHeader(B2ResponseHeaders.HEADER_X_BZ_UPLOAD_TIMESTAMP).getValue();
+	public B2DownloadFileResponse(CloseableHttpResponse response) throws B2ApiException {
+		this.response = response;
+		this.contentLength = Long.parseLong(response.getFirstHeader(HttpHeaders.CONTENT_LENGTH).getValue());
+		this.contentType = response.getFirstHeader(HttpHeaders.CONTENT_TYPE).getValue();
+		this.contentSha1 = response.getFirstHeader(B2ResponseHeaders.HEADER_X_BZ_CONTENT_SHA1).getValue();
+		this.fileId = response.getFirstHeader(B2ResponseHeaders.HEADER_X_BZ_FILE_ID).getValue();
+		this.fileName = response.getFirstHeader(B2ResponseHeaders.HEADER_X_BZ_FILE_NAME).getValue();
+		this.uploadTimestamp = response.getFirstHeader(B2ResponseHeaders.HEADER_X_BZ_UPLOAD_TIMESTAMP).getValue();
 
 		for (Header header : response.getAllHeaders()) {
 			String headerName = header.getName();
@@ -109,13 +101,24 @@ public class B2DownloadFileResponse {
 		}
 	}
 
+	public CloseableHttpResponse getResponse() {
+		return response;
+	}
+
 	/**
 	 * Get the content of the downloaded file, if this was a HEAD request, then 
 	 * this will return null.
 	 * 
 	 * @return the downloaded file
 	 */
-	public InputStream getContent() { return this.stream; }
+	public InputStream getContent() throws IOException {
+		if(null != response.getEntity()) {
+			return new HttpMethodReleaseInputStream(response);
+		} else {
+			// HEAD responses do not have an entity
+			return new NullInputStream(0L);
+		}
+	}
 
 	/**
 	 * Get the content length of the downloaded file
@@ -173,12 +176,12 @@ public class B2DownloadFileResponse {
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("B2DownloadFileResponse{");
-		sb.append("content=").append(stream);
-		sb.append(", contentLength=").append(contentLength);
+		sb.append("contentLength=").append(contentLength);
 		sb.append(", contentType='").append(contentType).append('\'');
 		sb.append(", fileId='").append(fileId).append('\'');
 		sb.append(", fileName='").append(fileName).append('\'');
 		sb.append(", contentSha1='").append(contentSha1).append('\'');
+		sb.append(", uploadTimestamp='").append(uploadTimestamp).append('\'');
 		sb.append(", fileInfo=").append(fileInfo);
 		sb.append('}');
 		return sb.toString();
