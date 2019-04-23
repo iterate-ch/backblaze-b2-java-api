@@ -28,29 +28,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
 import synapticloop.b2.exception.B2ApiException;
-import synapticloop.b2.request.B2AuthorizeAccountRequest;
-import synapticloop.b2.request.B2CancelLargeFileRequest;
-import synapticloop.b2.request.B2CreateBucketRequest;
-import synapticloop.b2.request.B2DeleteBucketRequest;
-import synapticloop.b2.request.B2DeleteFileVersionRequest;
-import synapticloop.b2.request.B2DownloadFileByIdRequest;
-import synapticloop.b2.request.B2DownloadFileByNameRequest;
-import synapticloop.b2.request.B2FinishLargeFileRequest;
-import synapticloop.b2.request.B2GetDownloadAuthorizationRequest;
-import synapticloop.b2.request.B2GetFileInfoRequest;
-import synapticloop.b2.request.B2GetUploadPartUrlRequest;
-import synapticloop.b2.request.B2GetUploadUrlRequest;
-import synapticloop.b2.request.B2HeadFileByIdRequest;
-import synapticloop.b2.request.B2HideFileRequest;
-import synapticloop.b2.request.B2ListBucketsRequest;
-import synapticloop.b2.request.B2ListFileNamesRequest;
-import synapticloop.b2.request.B2ListFileVersionsRequest;
-import synapticloop.b2.request.B2ListPartsRequest;
-import synapticloop.b2.request.B2ListUnfinishedLargeFilesRequest;
-import synapticloop.b2.request.B2StartLargeFileRequest;
-import synapticloop.b2.request.B2UpdateBucketRequest;
-import synapticloop.b2.request.B2UploadFileRequest;
-import synapticloop.b2.request.B2UploadPartRequest;
+import synapticloop.b2.request.*;
 import synapticloop.b2.response.B2AuthorizeAccountResponse;
 import synapticloop.b2.response.B2BucketResponse;
 import synapticloop.b2.response.B2DeleteFileVersionResponse;
@@ -605,6 +583,21 @@ public class B2ApiClient {
 		return new B2ListPartsRequest(client, b2AuthorizeAccountResponse, fileId, startPartNumber, maxPartCount).getResponse();
 	}
 
+	/**
+	 * Copy a file
+	 *
+	 * @param sourceFileId Source file
+	 * @param largeFileId Target large file upload
+	 * @param partNumber Part of source file
+	 * @return
+	 * @throws B2ApiException if there was an error copying the file
+	 * @throws IOException if there was an error communicating with the API service
+	 */
+	public B2UploadPartResponse copyLargePart(String sourceFileId, String largeFileId, int partNumber) throws B2ApiException, IOException {
+		return new B2CopyPartByIdRequest(client, b2AuthorizeAccountResponse, sourceFileId, largeFileId, partNumber).getResponse();
+	}
+
+
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 *
 	 *   DELETE FILE API ACTIONS
@@ -639,6 +632,19 @@ public class B2ApiClient {
 	 */
 	public B2HideFileResponse hideFile(String bucketId, String fileName) throws B2ApiException, IOException {
 		return new B2HideFileRequest(client, b2AuthorizeAccountResponse, bucketId, fileName).getResponse();
+	}
+
+	/**
+	 * Copy a file
+	 *
+	 * @param sourceFileId Source file
+	 * @param fileName Target filename
+	 * @return
+	 * @throws B2ApiException if there was an error copying the file
+	 * @throws IOException if there was an error communicating with the API service
+	 */
+	public B2FileResponse copyFile(String sourceFileId, String fileName) throws B2ApiException, IOException {
+		return new B2CopyFileByIdRequest(client, b2AuthorizeAccountResponse, sourceFileId, fileName).getResponse();
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
