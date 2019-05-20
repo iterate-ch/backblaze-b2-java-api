@@ -37,7 +37,6 @@ public final class B2ResponseProperties {
 	public static final String KEY_FILE_NAME_PREFIX = "fileNamePrefix";
 	public static final String KEY_FILES = "files";
 	public static final String KEY_LIFECYCLE_RULES = "lifecycleRules";
-	public static final String KEY_MINIMUM_PART_SIZE = "minimumPartSize";
 	public static final String KEY_NEXT_FILE_ID = "nextFileId";
 	public static final String KEY_NEXT_FILE_NAME = "nextFileName";
 	public static final String KEY_NEXT_PART_NUMBER = "nextPartNumber";

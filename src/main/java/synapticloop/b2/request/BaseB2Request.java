@@ -50,7 +50,7 @@ public abstract class BaseB2Request {
 	private static final Logger LOGGER = LoggerFactory.getLogger(BaseB2Request.class);
 
 	protected static final String BASE_API_HOST = "https://api.backblazeb2.com";
-	protected static final String BASE_API_VERSION = "/b2api/v1/";
+	protected static final String BASE_API_VERSION = "/b2api/v2/";
 	protected static final String BASE_API = BASE_API_HOST + BASE_API_VERSION;
 
 	public static final String VALUE_APPLICATION_X_WWW_FORM_URLENCODED = "application/x-www-form-urlencoded";

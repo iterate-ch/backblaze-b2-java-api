@@ -28,6 +28,8 @@ import synapticloop.b2.exception.B2ApiException;
 public class B2ListFilesResponse extends BaseB2Response {
 	private static final Logger LOGGER = LoggerFactory.getLogger(B2ListFilesResponse.class);
 
+	private final String accountId;
+	private final String bucketId;
 	private final List<B2FileInfoResponse> files;
 	private final String nextFileName;
 	private final String nextFileId;
@@ -44,6 +46,8 @@ public class B2ListFilesResponse extends BaseB2Response {
 	public B2ListFilesResponse(String json) throws B2ApiException {
 		super(json);
 
+		this.accountId = this.readString(B2ResponseProperties.KEY_ACCOUNT_ID);
+		this.bucketId = this.readString(B2ResponseProperties.KEY_BUCKET_ID);
 		this.nextFileName = this.readString(B2ResponseProperties.KEY_NEXT_FILE_NAME);
 		this.nextFileId = this.readString(B2ResponseProperties.KEY_NEXT_FILE_ID);
 
@@ -56,6 +60,10 @@ public class B2ListFilesResponse extends BaseB2Response {
 
 		this.warnOnMissedKeys();
 	}
+
+	public String getAccountId() { return accountId; }
+
+	public String getBucketId() { return bucketId; }
 
 	/**
 	 * get the next file name that is the next result to be returned after this 
