@@ -28,7 +28,6 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 	private final String apiUrl;
 	private final String authorizationToken;
 	private final String downloadUrl;
-	private final int minimumPartSize;
 	private final int recommendedPartSize;
 	private final int absoluteMinimumPartSize;
 	/**
@@ -47,7 +46,6 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 		this.apiUrl = this.readString(B2ResponseProperties.KEY_API_URL);
 		this.authorizationToken = this.readString(B2ResponseProperties.KEY_AUTHORIZATION_TOKEN);
 		this.downloadUrl = this.readString(B2ResponseProperties.KEY_DOWNLOAD_URL);
-		this.minimumPartSize = this.readInt(B2ResponseProperties.KEY_MINIMUM_PART_SIZE);
 		this.recommendedPartSize = this.readInt(B2ResponseProperties.KEY_RECOMMENDED_PART_SIZE);
 		this.absoluteMinimumPartSize = this.readInt(B2ResponseProperties.KEY_ABSOLUTE_MINIMUM_PART_SIZE);
 
@@ -85,15 +83,6 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 	public String getDownloadUrl() { return this.downloadUrl; }
 
 	/**
-	 * The minimum size for each part of a large file (except the last one). This 
-	 * will always be 100,000,000, but we recommend that you write your code to 
-	 * get the number here, rather than use a hard-coded constant.
-	 * 
-	 * @return the minimum part size for downloads
-	 */
-	public int getMinimumPartSize() {return this.minimumPartSize; }
-
-	/**
 	 * The recommended size for each part of a large file. We recommend using
 	 * this part size for optimal upload performance.
 	 *
@@ -124,8 +113,6 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 		stringBuilder.append(this.authorizationToken);
 		stringBuilder.append(", downloadUrl=");
 		stringBuilder.append(this.downloadUrl);
-		stringBuilder.append(", minimumPartSize=");
-		stringBuilder.append(this.minimumPartSize);
 		stringBuilder.append("]");
 		return stringBuilder.toString();
 	}
