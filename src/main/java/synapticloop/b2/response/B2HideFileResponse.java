@@ -29,6 +29,8 @@ public class B2HideFileResponse extends BaseB2Response {
 
 	private final String fileId;
 	private final String fileName;
+	private final String accountId;
+	private final String bucketId;
 	private Action action;
 	private final Integer size;
 	private final Long uploadTimestamp;
@@ -51,7 +53,8 @@ public class B2HideFileResponse extends BaseB2Response {
 
 		this.fileId = this.readString(B2ResponseProperties.KEY_FILE_ID);
 		this.fileName = this.readString(B2ResponseProperties.KEY_FILE_NAME);
-
+		this.accountId = this.readString(B2ResponseProperties.KEY_ACCOUNT_ID);
+		this.bucketId = this.readString(B2ResponseProperties.KEY_BUCKET_ID);
 		String action = this.readString(B2ResponseProperties.KEY_ACTION);
 		if(null != action) {
 			try {
@@ -75,6 +78,10 @@ public class B2HideFileResponse extends BaseB2Response {
 	public String getFileId() { return this.fileId; }
 
 	public String getFileName() { return this.fileName; }
+
+	public String getAccountId() { return accountId; }
+
+	public String getBucketId() { return bucketId; }
 
 	public Action getAction() { return this.action; }
 
