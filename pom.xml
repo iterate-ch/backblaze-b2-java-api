@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ch.iterate.backblaze</groupId>
     <artifactId>b2</artifactId>
-    <version>2.0.16</version>
+    <version>2.0.17-SNAPSHOT</version>
     <packaging>jar</packaging>
     <description>Java language bindings for Backblaze B2 Cloud Storage</description>
     <url>https://github.com/iterate-ch/backblaze-b2-java-api</url>
@@ -40,7 +40,7 @@
         <url>https://github.com/iterate-ch/backblaze-b2-java-api</url>
         <connection>https://github.com/iterate-ch/backblaze-b2-java-api</connection>
         <developerConnection>scm:git:git@github.com:iterate-ch/backblaze-b2-java-api.git</developerConnection>
-      <tag>b2-2.0.16</tag>
+      <tag>HEAD</tag>
   </scm>
     <dependencies>
         <dependency>
