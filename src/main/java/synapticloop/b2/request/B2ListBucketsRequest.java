@@ -50,6 +50,13 @@ public class B2ListBucketsRequest extends BaseB2Request {
 		this.addProperty(B2RequestProperties.KEY_ACCOUNT_ID, b2AuthorizeAccountResponse.getAccountId());
 	}
 
+	public B2ListBucketsRequest(CloseableHttpClient client, B2AuthorizeAccountResponse b2AuthorizeAccountResponse, String bucketName) {
+		super(client, b2AuthorizeAccountResponse, b2AuthorizeAccountResponse.getApiUrl() + B2_LIST_BUCKETS);
+
+		this.addProperty(B2RequestProperties.KEY_ACCOUNT_ID, b2AuthorizeAccountResponse.getAccountId());
+		this.addProperty(B2RequestProperties.KEY_BUCKET_NAME, bucketName);
+	}
+
 	/**
 	 * Return the list buckets response 
 	 * 

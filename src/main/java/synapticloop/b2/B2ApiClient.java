@@ -197,6 +197,18 @@ public class B2ApiClient {
 		return new B2ListBucketsRequest(client, b2AuthorizeAccountResponse).getResponse().getBuckets();
 	}
 
+	/**
+	 * List bucket in the account
+	 *
+	 * @return the bucket
+	 *
+	 * @throws B2ApiException if something went wrong
+	 * @throws IOException if there was an error communicating with the API service
+	 */
+	public B2BucketResponse listBucket(String bucketName) throws B2ApiException, IOException {
+		return new B2ListBucketsRequest(client, b2AuthorizeAccountResponse, bucketName).getResponse().getBuckets().get(0);
+	}
+
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 *
 	 *   FILE INFORMATION API ACTIONS
