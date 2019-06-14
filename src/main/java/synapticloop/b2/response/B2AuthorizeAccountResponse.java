@@ -16,10 +16,15 @@ package synapticloop.b2.response;
  * this source code or binaries.
  */
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import synapticloop.b2.exception.B2ApiException;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class B2AuthorizeAccountResponse extends BaseB2Response {
 	private static final Logger LOGGER = LoggerFactory.getLogger(B2AuthorizeAccountResponse.class);
@@ -30,6 +35,11 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 	private final String downloadUrl;
 	private final int recommendedPartSize;
 	private final int absoluteMinimumPartSize;
+	private final String bucketId;
+	private final String bucketName;
+	private final Set<String> capabilities;
+	private final String namePrefix;
+
 	/**
 	 * Instantiate an authorize account response with the JSON response as a 
 	 * string from the API call.  This response is then parsed into the 
@@ -48,6 +58,15 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 		this.downloadUrl = this.readString(B2ResponseProperties.KEY_DOWNLOAD_URL);
 		this.recommendedPartSize = this.readInt(B2ResponseProperties.KEY_RECOMMENDED_PART_SIZE);
 		this.absoluteMinimumPartSize = this.readInt(B2ResponseProperties.KEY_ABSOLUTE_MINIMUM_PART_SIZE);
+		final JSONObject allowed = this.readObject(B2ResponseProperties.KEY_ALLOWED);
+		final JSONArray capabilities = allowed.getJSONArray(B2ResponseProperties.KEY_CAPABILITIES);
+		this.capabilities = new HashSet<>();
+		for (Object object : capabilities) {
+			this.capabilities.add(object.toString());
+		}
+		this.bucketId = allowed.optString(B2ResponseProperties.KEY_BUCKET_ID);
+		this.bucketName = allowed.optString(B2ResponseProperties.KEY_BUCKET_NAME);
+		this.namePrefix = allowed.optString(B2ResponseProperties.KEY_BUCKET_NAME);
 
 		this.warnOnMissedKeys();
 	}
@@ -98,6 +117,14 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 	 * @return the absolute minimum part size for downloads
 	 */
 	public int getAbsoluteMinimumPartSize() { return absoluteMinimumPartSize; }
+
+	public String getBucketId() { return bucketId; }
+
+	public String getBucketName() { return bucketName; }
+
+	public Set<String> getCapabilities() { return capabilities; }
+
+	public String getNamePrefix() { return namePrefix; }
 
 	@Override
 	protected Logger getLogger() { return LOGGER; }
