@@ -47,4 +47,6 @@ public final class B2ResponseProperties {
 	public static final String KEY_SIZE = "size";
 	public static final String KEY_UPLOAD_TIMESTAMP = "uploadTimestamp";
 	public static final String KEY_UPLOAD_URL = "uploadUrl";
+	public static final String KEY_ALLOWED = "allowed";
+	public static final String KEY_CAPABILITIES = "capabilities";
 }
