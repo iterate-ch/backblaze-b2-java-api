@@ -30,7 +30,7 @@ public class B2CopyFileByIdRequest extends BaseB2Request {
     public B2CopyFileByIdRequest(CloseableHttpClient client, B2AuthorizeAccountResponse b2AuthorizeAccountResponse, String sourceFileId, String destinationBucketId, String fileName) {
         super(client, b2AuthorizeAccountResponse, b2AuthorizeAccountResponse.getApiUrl() + B2_COPY_FILE);
 
-        this.addProperty(B2RequestProperties.KEY_DESTINATION_BUCKET_ID, sourceFileId);
+        this.addProperty(B2RequestProperties.KEY_DESTINATION_BUCKET_ID, destinationBucketId);
         this.addProperty(B2RequestProperties.KEY_SOURCE_FILE_ID, sourceFileId);
         this.addProperty(B2RequestProperties.KEY_FILE_NAME, fileName);
     }
