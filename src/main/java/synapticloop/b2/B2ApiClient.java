@@ -650,13 +650,16 @@ public class B2ApiClient {
 	 * Copy a file
 	 *
 	 * @param sourceFileId Source file
+	 * @param destinationBucketId        The ID of the bucket where the copied file will be stored
 	 * @param fileName Target filename
-	 * @return
+	 *
+	 * @return The copy response
+	 *
 	 * @throws B2ApiException if there was an error copying the file
 	 * @throws IOException if there was an error communicating with the API service
 	 */
-	public B2FileResponse copyFile(String sourceFileId, String fileName) throws B2ApiException, IOException {
-		return new B2CopyFileByIdRequest(client, b2AuthorizeAccountResponse, sourceFileId, fileName).getResponse();
+	public B2FileResponse copyFile(String sourceFileId, String destinationBucketId, String fileName) throws B2ApiException, IOException {
+		return new B2CopyFileByIdRequest(client, b2AuthorizeAccountResponse, sourceFileId, destinationBucketId, fileName).getResponse();
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

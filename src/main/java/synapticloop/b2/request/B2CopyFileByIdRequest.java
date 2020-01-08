@@ -24,11 +24,13 @@ public class B2CopyFileByIdRequest extends BaseB2Request {
      * @param client                     the http client to use
      * @param b2AuthorizeAccountResponse the authorize account response
      * @param sourceFileId               The ID of the source file being copied
+     * @param destinationBucketId        The ID of the bucket where the copied file will be stored
      * @param fileName                   The name of the new file being created
      */
-    public B2CopyFileByIdRequest(CloseableHttpClient client, B2AuthorizeAccountResponse b2AuthorizeAccountResponse, String sourceFileId, String fileName) {
+    public B2CopyFileByIdRequest(CloseableHttpClient client, B2AuthorizeAccountResponse b2AuthorizeAccountResponse, String sourceFileId, String destinationBucketId, String fileName) {
         super(client, b2AuthorizeAccountResponse, b2AuthorizeAccountResponse.getApiUrl() + B2_COPY_FILE);
 
+        this.addProperty(B2RequestProperties.KEY_DESTINATION_BUCKET_ID, sourceFileId);
         this.addProperty(B2RequestProperties.KEY_SOURCE_FILE_ID, sourceFileId);
         this.addProperty(B2RequestProperties.KEY_FILE_NAME, fileName);
     }
