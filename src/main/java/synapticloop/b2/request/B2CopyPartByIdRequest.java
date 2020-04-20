@@ -26,12 +26,16 @@ public class B2CopyPartByIdRequest extends BaseB2Request {
      * @param sourceFileId               The ID of the source file being copied
      * @param largeFileId                The ID of the large file the created file will belong to
      * @param partNumber                 Indicates which part of the large file the created file is
+     * @param range                      The range of bytes to copy
      */
-    public B2CopyPartByIdRequest(CloseableHttpClient client, B2AuthorizeAccountResponse b2AuthorizeAccountResponse, String sourceFileId, String largeFileId, int partNumber) {
+    public B2CopyPartByIdRequest(CloseableHttpClient client, B2AuthorizeAccountResponse b2AuthorizeAccountResponse, String sourceFileId, String largeFileId,
+                                 int partNumber, String range) {
         super(client, b2AuthorizeAccountResponse, b2AuthorizeAccountResponse.getApiUrl() + B2_COPY_PART_FILE);
 
         this.addProperty(B2RequestProperties.KEY_SOURCE_FILE_ID, sourceFileId);
         this.addProperty(B2RequestProperties.KEY_LARGE_FILE_ID, largeFileId);
+        this.addProperty(B2RequestProperties.KEY_PART_NUMBER, partNumber);
+        this.addProperty(B2RequestProperties.KEY_PART_RANGE, range);
     }
 
     /**

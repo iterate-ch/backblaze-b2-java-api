@@ -601,12 +601,13 @@ public class B2ApiClient {
 	 * @param sourceFileId Source file
 	 * @param largeFileId Target large file upload
 	 * @param partNumber Part of source file
+	 * @param range The range of bytes to copy
 	 * @return
 	 * @throws B2ApiException if there was an error copying the file
 	 * @throws IOException if there was an error communicating with the API service
 	 */
-	public B2UploadPartResponse copyLargePart(String sourceFileId, String largeFileId, int partNumber) throws B2ApiException, IOException {
-		return new B2CopyPartByIdRequest(client, b2AuthorizeAccountResponse, sourceFileId, largeFileId, partNumber).getResponse();
+	public B2UploadPartResponse copyLargePart(String sourceFileId, String largeFileId, int partNumber, String range) throws B2ApiException, IOException {
+		return new B2CopyPartByIdRequest(client, b2AuthorizeAccountResponse, sourceFileId, largeFileId, partNumber, range).getResponse();
 	}
 
 
