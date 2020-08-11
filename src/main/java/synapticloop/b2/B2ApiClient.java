@@ -206,7 +206,13 @@ public class B2ApiClient {
 	 * @throws IOException if there was an error communicating with the API service
 	 */
 	public B2BucketResponse listBucket(String bucketName) throws B2ApiException, IOException {
-		return new B2ListBucketsRequest(client, b2AuthorizeAccountResponse, bucketName).getResponse().getBuckets().get(0);
+		final List<B2BucketResponse> buckets = new B2ListBucketsRequest(client, b2AuthorizeAccountResponse, bucketName).getResponse().getBuckets();
+		for (B2BucketResponse bucket : buckets) {
+			if(bucketName.equals(bucket.getBucketName())) {
+				return bucket;
+			}
+		}
+		return null;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
