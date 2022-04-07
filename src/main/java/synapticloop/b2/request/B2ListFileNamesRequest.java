@@ -39,7 +39,7 @@ import synapticloop.b2.response.B2ListFilesResponse;
  * @author synapticloop
  */
 public class B2ListFileNamesRequest extends BaseB2Request {
-    private static final String B2_LIST_FILE_NAMES = BASE_API_VERSION + "b2_list_file_versions";
+    private static final String B2_LIST_FILE_NAMES = BASE_API_VERSION + "b2_list_file_names";
 
     private static final int DEFAULT_MAX_FILE_COUNT = 100;
 
