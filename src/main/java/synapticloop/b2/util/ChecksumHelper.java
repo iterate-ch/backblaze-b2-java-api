@@ -25,8 +25,7 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
-
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.IOUtils;
 
 public class ChecksumHelper {
@@ -72,7 +71,7 @@ public class ChecksumHelper {
 				len = inputStream.read(buffer);
 			}
 
-			return(new HexBinaryAdapter().marshal(messageDigest.digest()));
+			return(Hex.encodeHexString(messageDigest.digest()));
 		} catch (NoSuchAlgorithmException ex) {
 			throw new IOException(ex);
 		} finally {
