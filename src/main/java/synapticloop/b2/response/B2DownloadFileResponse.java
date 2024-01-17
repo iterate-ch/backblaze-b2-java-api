@@ -43,19 +43,19 @@ public class B2DownloadFileResponse {
 		ignoredHeaders.add("x-xss-protection");
 		ignoredHeaders.add("x-frame-options");
 
-		ignoredHeaders.add(HttpHeaders.SERVER.toLowerCase(Locale.ENGLISH));
-		ignoredHeaders.add(HttpHeaders.ACCEPT_RANGES.toLowerCase(Locale.ENGLISH));
-		ignoredHeaders.add(HttpHeaders.CONTENT_RANGE.toLowerCase(Locale.ENGLISH));
-		ignoredHeaders.add(HttpHeaders.CACHE_CONTROL.toLowerCase(Locale.ENGLISH));
-		ignoredHeaders.add(HttpHeaders.DATE.toLowerCase(Locale.ENGLISH));
+		ignoredHeaders.add(HttpHeaders.SERVER.toLowerCase(Locale.ROOT));
+		ignoredHeaders.add(HttpHeaders.ACCEPT_RANGES.toLowerCase(Locale.ROOT));
+		ignoredHeaders.add(HttpHeaders.CONTENT_RANGE.toLowerCase(Locale.ROOT));
+		ignoredHeaders.add(HttpHeaders.CACHE_CONTROL.toLowerCase(Locale.ROOT));
+		ignoredHeaders.add(HttpHeaders.DATE.toLowerCase(Locale.ROOT));
 
 		// the following are mapped
-		ignoredHeaders.add(HttpHeaders.CONTENT_LENGTH.toLowerCase(Locale.ENGLISH));
-		ignoredHeaders.add(HttpHeaders.CONTENT_TYPE.toLowerCase(Locale.ENGLISH));
-		ignoredHeaders.add(B2ResponseHeaders.HEADER_X_BZ_CONTENT_SHA1.toLowerCase(Locale.ENGLISH));
-		ignoredHeaders.add(B2ResponseHeaders.HEADER_X_BZ_FILE_ID.toLowerCase(Locale.ENGLISH));
-		ignoredHeaders.add(B2ResponseHeaders.HEADER_X_BZ_FILE_NAME.toLowerCase(Locale.ENGLISH));
-		ignoredHeaders.add(B2ResponseHeaders.HEADER_X_BZ_UPLOAD_TIMESTAMP.toLowerCase(Locale.ENGLISH));
+		ignoredHeaders.add(HttpHeaders.CONTENT_LENGTH.toLowerCase(Locale.ROOT));
+		ignoredHeaders.add(HttpHeaders.CONTENT_TYPE.toLowerCase(Locale.ROOT));
+		ignoredHeaders.add(B2ResponseHeaders.HEADER_X_BZ_CONTENT_SHA1.toLowerCase(Locale.ROOT));
+		ignoredHeaders.add(B2ResponseHeaders.HEADER_X_BZ_FILE_ID.toLowerCase(Locale.ROOT));
+		ignoredHeaders.add(B2ResponseHeaders.HEADER_X_BZ_FILE_NAME.toLowerCase(Locale.ROOT));
+		ignoredHeaders.add(B2ResponseHeaders.HEADER_X_BZ_UPLOAD_TIMESTAMP.toLowerCase(Locale.ROOT));
 	}
 
 	private final Long contentLength;
@@ -89,9 +89,9 @@ public class B2DownloadFileResponse {
 			String headerName = header.getName();
 			String headerValue = header.getValue();
 
-			String headerNameLowerCase = headerName.toLowerCase(Locale.ENGLISH);
+			String headerNameLowerCase = headerName.toLowerCase(Locale.ROOT);
 
-			if(headerNameLowerCase.startsWith(B2ResponseHeaders.HEADER_X_BZ_INFO_PREFIX.toLowerCase(Locale.ENGLISH))) {
+			if(headerNameLowerCase.startsWith(B2ResponseHeaders.HEADER_X_BZ_INFO_PREFIX.toLowerCase(Locale.ROOT))) {
 				fileInfo.put(headerName.substring(B2ResponseHeaders.HEADER_X_BZ_INFO_PREFIX.length()), headerValue);
 			} else {
 				if(!ignoredHeaders.contains(headerNameLowerCase)) {
