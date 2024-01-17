@@ -28,7 +28,6 @@ import org.apache.commons.io.input.NullInputStream;
 import org.apache.http.Header;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,12 +57,12 @@ public class B2DownloadFileResponse {
 		ignoredHeaders.add(B2ResponseHeaders.HEADER_X_BZ_UPLOAD_TIMESTAMP.toLowerCase(Locale.ROOT));
 	}
 
-	private final Long contentLength;
-	private final String contentType;
-	private final String fileId;
-	private final String fileName;
-	private final String contentSha1;
-	private final String uploadTimestamp;
+	private Long contentLength;
+	private String contentType;
+	private String fileId;
+	private String fileName;
+	private String contentSha1;
+	private String uploadTimestamp;
 
 	private final Map<String, String> fileInfo = new HashMap<String, String>();
 	private final CloseableHttpResponse response;
@@ -71,19 +70,31 @@ public class B2DownloadFileResponse {
 	/**
 	 * Instantiate a bucket response with the JSON response as a string from 
 	 * the API call.  This response is then parsed into the relevant fields.
-	 * 
+	 *
 	 * @param response The HTTP response object
-	 * 
+	 *
 	 * @throws B2ApiException if there was an error parsing the response
 	 */
 	public B2DownloadFileResponse(CloseableHttpResponse response) throws B2ApiException {
 		this.response = response;
-		this.contentLength = Long.parseLong(response.getFirstHeader(HttpHeaders.CONTENT_LENGTH).getValue());
-		this.contentType = response.getFirstHeader(HttpHeaders.CONTENT_TYPE).getValue();
-		this.contentSha1 = response.getFirstHeader(B2ResponseHeaders.HEADER_X_BZ_CONTENT_SHA1).getValue();
-		this.fileId = response.getFirstHeader(B2ResponseHeaders.HEADER_X_BZ_FILE_ID).getValue();
-		this.fileName = response.getFirstHeader(B2ResponseHeaders.HEADER_X_BZ_FILE_NAME).getValue();
-		this.uploadTimestamp = response.getFirstHeader(B2ResponseHeaders.HEADER_X_BZ_UPLOAD_TIMESTAMP).getValue();
+		if(response.containsHeader(B2ResponseHeaders.HEADER_CONTENT_LENGTH)) {
+			this.contentLength = Long.parseLong(response.getFirstHeader(B2ResponseHeaders.HEADER_CONTENT_LENGTH).getValue());
+		}
+		if(response.containsHeader(B2ResponseHeaders.HEADER_CONTENT_TYPE)) {
+			this.contentType = response.getFirstHeader(B2ResponseHeaders.HEADER_CONTENT_TYPE).getValue();
+		}
+		if(response.containsHeader(B2ResponseHeaders.HEADER_X_BZ_CONTENT_SHA1)) {
+			this.contentSha1 = response.getFirstHeader(B2ResponseHeaders.HEADER_X_BZ_CONTENT_SHA1).getValue();
+		}
+		if(response.containsHeader(B2ResponseHeaders.HEADER_X_BZ_FILE_ID)) {
+			this.fileId = response.getFirstHeader(B2ResponseHeaders.HEADER_X_BZ_FILE_ID).getValue();
+		}
+		if(response.containsHeader(B2ResponseHeaders.HEADER_X_BZ_FILE_NAME)) {
+			this.fileName = response.getFirstHeader(B2ResponseHeaders.HEADER_X_BZ_FILE_NAME).getValue();
+		}
+		if(response.containsHeader(B2ResponseHeaders.HEADER_X_BZ_UPLOAD_TIMESTAMP)) {
+			this.uploadTimestamp = response.getFirstHeader(B2ResponseHeaders.HEADER_X_BZ_UPLOAD_TIMESTAMP).getValue();
+		}
 
 		for (Header header : response.getAllHeaders()) {
 			String headerName = header.getName();
