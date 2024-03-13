@@ -53,7 +53,7 @@ public class B2StartLargeFileRequestTest {
 		}
 		catch(B2ApiException e) {
 			assertEquals(400, e.getStatus());
-			assertEquals("large files must have at least 2 parts", e.getMessage());
+			assertEquals("Large files must have at least one part", e.getMessage());
 		}
 
 		final B2FileResponse b2FileResponse = new B2CancelLargeFileRequest(client, b2AuthorizeAccountResponse,
