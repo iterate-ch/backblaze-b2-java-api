@@ -51,16 +51,16 @@ public class B2ListPartsRequest extends BaseB2Request {
 							  String fileId, Integer startPartNumber, Integer maxPartCount) {
 		super(client, b2AuthorizeAccountResponse, b2AuthorizeAccountResponse.getApiUrl() + B2_LIST_PARTS);
 
-		this.addProperty(B2RequestProperties.KEY_FILE_ID, fileId);
+		this.addParameter(B2RequestProperties.KEY_FILE_ID, fileId);
 		if (startPartNumber != null) {
-			this.addProperty(B2RequestProperties.KEY_START_PART_NUMBER, startPartNumber);
+			this.addParameter(B2RequestProperties.KEY_START_PART_NUMBER, String.valueOf(startPartNumber));
 		}
 		if (startPartNumber != null) {
-			this.addProperty(B2RequestProperties.KEY_MAX_PART_COUNT, maxPartCount);
+			this.addParameter(B2RequestProperties.KEY_MAX_PART_COUNT, String.valueOf(maxPartCount));
 		}
 	}
 
 	public B2ListPartsResponse getResponse() throws B2ApiException, IOException {
-		return new B2ListPartsResponse(EntityUtils.toString(executePost().getEntity()));
+		return new B2ListPartsResponse(EntityUtils.toString(executeGet().getEntity()));
 	}
 }
