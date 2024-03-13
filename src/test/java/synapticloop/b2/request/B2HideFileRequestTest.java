@@ -46,6 +46,12 @@ public class B2HideFileRequestTest {
 				B2TestHelper.getB2AuthorizeAccountResponse(), 
 				bucketId).getResponse();
 
+		assertEquals(0, b2ListFilesResponse.getFiles().size());
+
+		b2ListFilesResponse = new B2ListFileVersionsRequest(HttpClients.createDefault(),
+				B2TestHelper.getB2AuthorizeAccountResponse(),
+				bucketId).getResponse();
+
 		assertEquals(2, b2ListFilesResponse.getFiles().size());
 
 	}
