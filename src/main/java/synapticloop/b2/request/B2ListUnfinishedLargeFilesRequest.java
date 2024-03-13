@@ -51,16 +51,16 @@ public class B2ListUnfinishedLargeFilesRequest extends BaseB2Request {
 											 String bucketId, String startFileId, Integer maxFileCount) {
 		super(client, b2AuthorizeAccountResponse, b2AuthorizeAccountResponse.getApiUrl() + B2_LIST_UNFINISHED_LARGE_FILES);
 
-		this.addProperty(B2RequestProperties.KEY_BUCKET_ID, bucketId);
+		this.addParameter(B2RequestProperties.KEY_BUCKET_ID, bucketId);
 		if (null != startFileId) {
-			this.addProperty(B2RequestProperties.KEY_START_FILE_ID, startFileId);
+			this.addParameter(B2RequestProperties.KEY_START_FILE_ID, startFileId);
 		}
 		if (maxFileCount != null) {
-			this.addProperty(B2RequestProperties.KEY_MAX_FILE_COUNT, maxFileCount);
+			this.addParameter(B2RequestProperties.KEY_MAX_FILE_COUNT, String.valueOf(maxFileCount));
 		}
 	}
 
 	public B2ListFilesResponse getResponse() throws B2ApiException, IOException {
-		return new B2ListFilesResponse(EntityUtils.toString(executePost().getEntity()));
+		return new B2ListFilesResponse(EntityUtils.toString(executeGet().getEntity()));
 	}
 }

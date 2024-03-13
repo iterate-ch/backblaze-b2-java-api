@@ -52,7 +52,7 @@ public class B2GetFileInfoRequest extends BaseB2Request {
 	public B2GetFileInfoRequest(CloseableHttpClient client, B2AuthorizeAccountResponse b2AuthorizeAccountResponse, String fileId) {
 		super(client, b2AuthorizeAccountResponse, b2AuthorizeAccountResponse.getApiUrl() + B2_GET_FILE_INFO);
 
-		this.addProperty(B2RequestProperties.KEY_FILE_ID, fileId);
+		this.addParameter(B2RequestProperties.KEY_FILE_ID, fileId);
 	}
 
 	/**
@@ -64,6 +64,6 @@ public class B2GetFileInfoRequest extends BaseB2Request {
 	 * @throws IOException if there was an error communicating with the API service
 	 */
 	public B2FileResponse getResponse() throws B2ApiException, IOException {
-		return new B2FileResponse(EntityUtils.toString(executePost().getEntity()));
+		return new B2FileResponse(EntityUtils.toString(executeGet().getEntity()));
 	}
 }

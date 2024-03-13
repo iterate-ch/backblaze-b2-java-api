@@ -84,19 +84,19 @@ public class B2ListFileNamesRequest extends BaseB2Request {
     public B2ListFileNamesRequest(CloseableHttpClient client, B2AuthorizeAccountResponse b2AuthorizeAccountResponse, String bucketId, String startFileName, Integer maxFileCount, String prefix, String delimiter) {
         super(client, b2AuthorizeAccountResponse, b2AuthorizeAccountResponse.getApiUrl() + B2_LIST_FILE_NAMES);
 
-        this.addProperty(B2RequestProperties.KEY_BUCKET_ID, bucketId);
+        this.addParameter(B2RequestProperties.KEY_BUCKET_ID, bucketId);
 
         if(null != startFileName) {
-            this.addProperty(B2RequestProperties.KEY_START_FILE_NAME, startFileName);
+            this.addParameter(B2RequestProperties.KEY_START_FILE_NAME, startFileName);
         }
         if(null != prefix) {
-            this.addProperty(B2RequestProperties.KEY_PREFIX, prefix);
+            this.addParameter(B2RequestProperties.KEY_PREFIX, prefix);
         }
         if(null != delimiter) {
-            this.addProperty(B2RequestProperties.KEY_DELIMITER, delimiter);
+            this.addParameter(B2RequestProperties.KEY_DELIMITER, delimiter);
         }
 
-        this.addProperty(B2RequestProperties.KEY_MAX_FILE_COUNT, maxFileCount);
+        this.addParameter(B2RequestProperties.KEY_MAX_FILE_COUNT, String.valueOf(maxFileCount));
     }
 
     /**
@@ -107,6 +107,6 @@ public class B2ListFileNamesRequest extends BaseB2Request {
      * @throws IOException    if there was an error communicating with the API service
      */
     public B2ListFilesResponse getResponse() throws B2ApiException, IOException {
-        return new B2ListFilesResponse(EntityUtils.toString(executePost().getEntity()));
+        return new B2ListFilesResponse(EntityUtils.toString(executeGet().getEntity()));
     }
 }
