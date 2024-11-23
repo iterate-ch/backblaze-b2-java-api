@@ -55,7 +55,7 @@ public class B2ListPartsRequest extends BaseB2Request {
 		if (startPartNumber != null) {
 			this.addParameter(B2RequestProperties.KEY_START_PART_NUMBER, String.valueOf(startPartNumber));
 		}
-		if (startPartNumber != null) {
+		if (maxPartCount != null) {
 			this.addParameter(B2RequestProperties.KEY_MAX_PART_COUNT, String.valueOf(maxPartCount));
 		}
 	}
