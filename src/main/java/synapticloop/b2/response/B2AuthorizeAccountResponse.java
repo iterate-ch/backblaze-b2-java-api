@@ -135,7 +135,7 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 	 *
 	 * @return the recommended part size for optimal upload performance
 	 */
-	public int getRecommendedPartSize() { return recommendedPartSize; }
+	public Integer getRecommendedPartSize() { return recommendedPartSize; }
 
 	/**
 	 * The smallest possible size of a part of a large file (except the last one).
@@ -144,7 +144,7 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 	 *
 	 * @return the absolute minimum part size for downloads
 	 */
-	public int getAbsoluteMinimumPartSize() { return absoluteMinimumPartSize; }
+	public Integer getAbsoluteMinimumPartSize() { return absoluteMinimumPartSize; }
 
 	/**
 	 * Get the list of capabilities that this authorization token allows.

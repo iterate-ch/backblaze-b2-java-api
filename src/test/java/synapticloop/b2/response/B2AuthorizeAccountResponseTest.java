@@ -36,8 +36,10 @@ public class B2AuthorizeAccountResponseTest {
         assertNotNull(response.getApiUrl());
         assertFalse(response.getCapabilities().isEmpty());
         assertTrue(response.getBuckets().isEmpty());
-        assertEquals(5000000, response.getAbsoluteMinimumPartSize());
-        assertEquals(100000000, response.getRecommendedPartSize());
+        assertNotNull(response.getAbsoluteMinimumPartSize());
+        assertEquals(5000000, response.getAbsoluteMinimumPartSize().intValue());
+        assertNotNull(response.getRecommendedPartSize());
+        assertEquals(100000000, response.getRecommendedPartSize().intValue());
         assertEquals("invalid", response.getAuthorizationToken());
     }
 
@@ -90,8 +92,10 @@ public class B2AuthorizeAccountResponseTest {
         assertEquals(1, response.getBuckets().size());
         assertEquals("fa", response.getBuckets().entrySet().iterator().next().getKey());
         assertEquals("test-cyberduck", response.getBuckets().entrySet().iterator().next().getValue());
-        assertEquals(5000000, response.getAbsoluteMinimumPartSize());
-        assertEquals(100000000, response.getRecommendedPartSize());
+        assertNotNull(response.getAbsoluteMinimumPartSize());
+        assertEquals(5000000, response.getAbsoluteMinimumPartSize().intValue());
+        assertNotNull(response.getRecommendedPartSize());
+        assertEquals(100000000, response.getRecommendedPartSize().intValue());
         assertEquals("invalid", response.getAuthorizationToken());
     }
 }
