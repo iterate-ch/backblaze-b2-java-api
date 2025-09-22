@@ -22,10 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import synapticloop.b2.exception.B2ApiException;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class B2AuthorizeAccountResponse extends BaseB2Response {
 	private static final Logger LOGGER = LoggerFactory.getLogger(B2AuthorizeAccountResponse.class);
@@ -37,7 +34,7 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 	private final Integer recommendedPartSize;
 	private final Integer absoluteMinimumPartSize;
 	private final Set<String> capabilities = new HashSet<>();
-	private final Set<String> buckets = new HashSet<>();
+	private final Map<String, String> buckets = new HashMap<>();
 	private final String namePrefix;
 	/**
 	 * Instantiate an authorize account response with the JSON response as a 
@@ -70,15 +67,14 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
                             this.capabilities.add(capabilitiesArray.getString(i));
                         }
                     }
-
                     // Parse buckets array (can be null for full access)
                     JSONArray bucketsArray = allowedObject.optJSONArray(B2ResponseProperties.KEY_ALLOWED_BUCKETS);
                     if (bucketsArray != null) {
                         for (int i = 0; i < bucketsArray.length(); i++) {
-                            this.buckets.add(bucketsArray.getString(i));
+                            final JSONObject bucket = bucketsArray.getJSONObject(i);
+                            this.buckets.put(bucket.getString("id"), bucket.getString("name"));
                         }
                     }
-
                     // Parse namePrefix (can be null)
                     this.namePrefix = allowedObject.optString(B2ResponseProperties.KEY_ALLOWED_NAME_PREFIX, null);
                 } else {
@@ -163,9 +159,9 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 	 * If null or empty, the token has access to all buckets.
 	 * This field was added in API v4 to provide more fine-grained access control.
 	 *
-	 * @return the list of allowed bucket IDs for this authorization token
+	 * @return the set of allowed bucket IDs mapped to bucket name for this authorization token
 	 */
-	public Set<String> getBuckets() { return new HashSet<>(buckets); }
+	public Map<String, String> getBuckets() { return new HashMap<>(buckets); }
 
 	/**
 	 * Get the file name prefix that this authorization token allows access to.
