@@ -19,6 +19,8 @@ package synapticloop.b2.response;
 public final class B2ResponseProperties {
 	public static final String KEY_ABSOLUTE_MINIMUM_PART_SIZE = "absoluteMinimumPartSize";
 	public static final String KEY_ACCOUNT_ID = "accountId";
+ 	public static final String KEY_API_INFO = "apiInfo";
+	public static final String KEY_STORAGE_API = "storageApi";
 	public static final String KEY_ACTION = "action";
 	public static final String KEY_ALLOWED = "allowed";
 	public static final String KEY_ALLOWED_CAPABILITIES = "capabilities";
