@@ -1,24 +1,11 @@
- <a name="#documentr_top"></a>[![Build Status](https://travis-ci.org/synapticloop/backblaze-b2-java-api.svg?branch=master)](https://travis-ci.org/synapticloop/backblaze-b2-java-api) [![Download](https://api.bintray.com/packages/synapticloop/maven/backblaze-b2-java-api/images/download.svg)](https://bintray.com/synapticloop/maven/backblaze-b2-java-api/_latestVersion) [![GitHub Release](https://img.shields.io/github/release/synapticloop/backblaze-b2-java-api.svg)](https://github.com/synapticloop/backblaze-b2-java-api/releases) 
-
-
-
-<a name="documentr_heading_0"></a>
-
-# backblaze-b2-java-api <sup><sup>[top](#documentr_top)</sup></sup>
-
+# backblaze-b2-java-api
 
 
 > A java api for the truly excellent backblaze b2 storage service
 
+[![Integration Tests](https://github.com/iterate-ch/backblaze-b2-java-api/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/iterate-ch/backblaze-b2-java-api/actions/workflows/ci.yml)
 
-
-
-
-
-<a name="documentr_heading_1"></a>
-
-# Table of Contents <sup><sup>[top](#documentr_top)</sup></sup>
-
+# Table of Contents
 
 
  - [backblaze-b2-java-api](#documentr_heading_0)
@@ -50,7 +37,7 @@ We thoroughly recommend either [cyberduck](https://cyberduck.io/) or [mountaindu
 
 <a name="documentr_heading_2"></a>
 
-# Usage <sup><sup>[top](#documentr_top)</sup></sup>
+# Usage
 
 
 
@@ -172,7 +159,7 @@ uploadFile(String, String, File, String, Map<String, String>)
 
 <a name="documentr_heading_3"></a>
 
-## Large File Support <sup><sup>[top](#documentr_top)</sup></sup>
+## Large File Support
 
 Large files can range in size from 100MB to 10TB.
 
@@ -198,13 +185,13 @@ listUnfinishedLargeFiles(String bucketId, String startFileId, Integer maxFileCou
 
 <a name="documentr_heading_4"></a>
 
-# Building the Package <sup><sup>[top](#documentr_top)</sup></sup>
+# Building the Package
 
 
 
 <a name="documentr_heading_5"></a>
 
-## *NIX/Mac OS X <sup><sup>[top](#documentr_top)</sup></sup>
+## *NIX/Mac OS X
 
 From the root of the project, simply run
 
@@ -215,7 +202,7 @@ From the root of the project, simply run
 
 <a name="documentr_heading_6"></a>
 
-## Windows <sup><sup>[top](#documentr_top)</sup></sup>
+## Windows
 
 `./gradlew.bat build`
 
@@ -228,13 +215,13 @@ Note that this may also run tests (if applicable see the Testing notes)
 
 <a name="documentr_heading_7"></a>
 
-# Running the Tests <sup><sup>[top](#documentr_top)</sup></sup>
+# Running the Tests
 
 
 
 <a name="documentr_heading_8"></a>
 
-## *NIX/Mac OS X <sup><sup>[top](#documentr_top)</sup></sup>
+## *NIX/Mac OS X
 
 From the root of the project, simply run
 
@@ -248,7 +235,7 @@ if you do not have gradle installed, try:
 
 <a name="documentr_heading_9"></a>
 
-## Windows <sup><sup>[top](#documentr_top)</sup></sup>
+## Windows
 
 From the root of the project, simply run
 
@@ -282,7 +269,7 @@ export B2_APPLICATION_KEY="your-application-key"
 
 <a name="documentr_heading_10"></a>
 
-# Logging - slf4j <sup><sup>[top](#documentr_top)</sup></sup>
+# Logging - slf4j
 
 slf4j is the logging framework used for this project.  In order to set up a logging framework with this project, sample configurations are below:
 
@@ -290,7 +277,7 @@ slf4j is the logging framework used for this project.  In order to set up a logg
 
 <a name="documentr_heading_11"></a>
 
-## Log4j <sup><sup>[top](#documentr_top)</sup></sup>
+## Log4j
 
 
 You will need to include dependencies for this - note that the versions may need to be updated.
@@ -375,7 +362,7 @@ A sample `log4j2.xml` is below:
 
 <a name="documentr_heading_16"></a>
 
-# Artefact Publishing - Github <sup><sup>[top](#documentr_top)</sup></sup>
+# Artefact Publishing - Github
 
 This project publishes artefacts to [GitHub](https://github.com/)
 
@@ -387,7 +374,7 @@ As such, this is not a repository, but a location to download files from.
 
 <a name="documentr_heading_17"></a>
 
-# Artefact Publishing - Bintray <sup><sup>[top](#documentr_top)</sup></sup>
+# Artefact Publishing - Bintray
 
 This project publishes artefacts to [bintray](https://bintray.com/)
 
@@ -397,7 +384,7 @@ This project publishes artefacts to [bintray](https://bintray.com/)
 
 <a name="documentr_heading_18"></a>
 
-## maven setup <sup><sup>[top](#documentr_top)</sup></sup>
+## maven setup
 
 this comes from the jcenter bintray, to set up your repository:
 
@@ -443,7 +430,7 @@ this comes from the jcenter bintray, to set up your repository:
 
 <a name="documentr_heading_19"></a>
 
-## gradle setup <sup><sup>[top](#documentr_top)</sup></sup>
+## gradle setup
 
 Repository
 
@@ -475,7 +462,7 @@ repositories {
 
 <a name="documentr_heading_20"></a>
 
-## Dependencies - Gradle <sup><sup>[top](#documentr_top)</sup></sup>
+## Dependencies - Gradle
 
 
 
@@ -507,7 +494,7 @@ dependencies {
 
 <a name="documentr_heading_21"></a>
 
-## Dependencies - Maven <sup><sup>[top](#documentr_top)</sup></sup>
+## Dependencies - Maven
 
 
 
@@ -526,7 +513,7 @@ dependencies {
 
 <a name="documentr_heading_22"></a>
 
-## Dependencies - Downloads <sup><sup>[top](#documentr_top)</sup></sup>
+## Dependencies - Downloads
 
 
 You will also need to download the following dependencies:
@@ -575,7 +562,7 @@ You will also need to download the following dependencies:
 
 <a name="documentr_heading_28"></a>
 
-# License <sup><sup>[top](#documentr_top)</sup></sup>
+# License
 
 
 
