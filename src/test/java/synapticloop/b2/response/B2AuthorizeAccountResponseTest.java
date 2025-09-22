@@ -4,10 +4,11 @@
 
 package synapticloop.b2.response;
 
-import junit.framework.TestCase;
 import org.junit.Test;
 
-public class B2AuthorizeAccountResponseTest extends TestCase {
+import static org.junit.Assert.*;
+
+public class B2AuthorizeAccountResponseTest {
 
     @Test
     public void testParseNoBucketRestriction() throws Exception {
