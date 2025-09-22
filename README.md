@@ -32,8 +32,7 @@
 
 # Just looking for a GUI?
 
-We thoroughly recommend either [cyberduck](https://cyberduck.io/) or [mountainduck](https://mountainduck.io/) which includes this code for the awesome BackBlaze storage service.
-
+We thoroughly recommend either [Cyberduck](https://cyberduck.io/) or [Mountain Duck](https://mountainduck.io/) which includes this code for the awesome BackBlaze storage service.
 
 <a name="documentr_heading_2"></a>
 
