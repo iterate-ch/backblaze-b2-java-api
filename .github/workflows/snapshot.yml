@@ -1,7 +1,7 @@
 name: Deploy Artifacts
 on:
   push:
-    branches: [ master ]
+    branches: [ develop ]
 jobs:
   snapshot:
     runs-on: ${{ matrix.os }}
