@@ -32,4 +32,4 @@ jobs:
         env:
           B2_ACCOUNT_ID: ${{ secrets.B2_ACCOUNT_ID }}
           B2_APPLICATION_KEY: ${{ secrets.B2_APPLICATION_KEY }}
-        run: mvn test
+        run: mvn --no-transfer-progress --batch-mode test
