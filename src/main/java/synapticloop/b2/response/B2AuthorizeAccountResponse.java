@@ -32,8 +32,8 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 	private final String apiUrl;
 	private final String authorizationToken;
 	private final String downloadUrl;
-	private final int recommendedPartSize;
-	private final int absoluteMinimumPartSize;
+	private final Integer recommendedPartSize;
+	private final Integer absoluteMinimumPartSize;
 	private final List<String> allowedCapabilities;
 	private final List<String> allowedBuckets;
 	private final String allowedNamePrefix;
