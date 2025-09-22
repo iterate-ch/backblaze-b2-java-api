@@ -20,11 +20,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import synapticloop.b2.exception.B2ApiException;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class B2AuthorizeAccountResponse extends BaseB2Response {
 	private static final Logger LOGGER = LoggerFactory.getLogger(B2AuthorizeAccountResponse.class);
@@ -33,13 +31,11 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 	private final String apiUrl;
 	private final String authorizationToken;
 	private final String downloadUrl;
-	private final int recommendedPartSize;
-	private final int absoluteMinimumPartSize;
-	private final String bucketId;
-	private final String bucketName;
-	private final Set<String> capabilities;
+	private final Integer recommendedPartSize;
+	private final Integer absoluteMinimumPartSize;
+	private final Set<String> capabilities = new HashSet<>();
+	private final Map<String, String> buckets = new HashMap<>();
 	private final String namePrefix;
-
 	/**
 	 * Instantiate an authorize account response with the JSON response as a 
 	 * string from the API call.  This response is then parsed into the 
@@ -53,20 +49,52 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 		super(json);
 
 		this.accountId = this.readString(B2ResponseProperties.KEY_ACCOUNT_ID);
-		this.apiUrl = this.readString(B2ResponseProperties.KEY_API_URL);
-		this.authorizationToken = this.readString(B2ResponseProperties.KEY_AUTHORIZATION_TOKEN);
-		this.downloadUrl = this.readString(B2ResponseProperties.KEY_DOWNLOAD_URL);
-		this.recommendedPartSize = this.readInt(B2ResponseProperties.KEY_RECOMMENDED_PART_SIZE);
-		this.absoluteMinimumPartSize = this.readInt(B2ResponseProperties.KEY_ABSOLUTE_MINIMUM_PART_SIZE);
-		final JSONObject allowed = this.readObject(B2ResponseProperties.KEY_ALLOWED);
-		final JSONArray capabilities = allowed.getJSONArray(B2ResponseProperties.KEY_CAPABILITIES);
-		this.capabilities = new HashSet<>();
-		for (Object object : capabilities) {
-			this.capabilities.add(object.toString());
-		}
-		this.bucketId = allowed.optString(B2ResponseProperties.KEY_BUCKET_ID);
-		this.bucketName = allowed.optString(B2ResponseProperties.KEY_BUCKET_NAME);
-		this.namePrefix = allowed.optString(B2ResponseProperties.KEY_BUCKET_NAME);
+        this.authorizationToken = this.readString(B2ResponseProperties.KEY_AUTHORIZATION_TOKEN);
+        final JSONObject apiInfo = this.readObject(B2ResponseProperties.KEY_API_INFO);
+        if (apiInfo != null) {
+            final JSONObject storageApi = apiInfo.optJSONObject(B2ResponseProperties.KEY_STORAGE_API);
+            if (storageApi != null) {
+                this.apiUrl = storageApi.optString(B2ResponseProperties.KEY_API_URL);
+                this.downloadUrl = storageApi.optString(B2ResponseProperties.KEY_DOWNLOAD_URL);
+                this.recommendedPartSize = storageApi.optIntegerObject(B2ResponseProperties.KEY_RECOMMENDED_PART_SIZE);
+                this.absoluteMinimumPartSize = storageApi.optIntegerObject(B2ResponseProperties.KEY_ABSOLUTE_MINIMUM_PART_SIZE);
+                final JSONObject allowedObject = storageApi.optJSONObject(B2ResponseProperties.KEY_ALLOWED);
+                if (allowedObject != null) {
+                    // Parse capabilities array
+                    JSONArray capabilitiesArray = allowedObject.optJSONArray(B2ResponseProperties.KEY_ALLOWED_CAPABILITIES);
+                    if (capabilitiesArray != null) {
+                        for (int i = 0; i < capabilitiesArray.length(); i++) {
+                            this.capabilities.add(capabilitiesArray.getString(i));
+                        }
+                    }
+                    // Parse buckets array (can be null for full access)
+                    JSONArray bucketsArray = allowedObject.optJSONArray(B2ResponseProperties.KEY_ALLOWED_BUCKETS);
+                    if (bucketsArray != null) {
+                        for (int i = 0; i < bucketsArray.length(); i++) {
+                            final JSONObject bucket = bucketsArray.getJSONObject(i);
+                            this.buckets.put(bucket.getString("id"), bucket.getString("name"));
+                        }
+                    }
+                    // Parse namePrefix (can be null)
+                    this.namePrefix = allowedObject.optString(B2ResponseProperties.KEY_ALLOWED_NAME_PREFIX, null);
+                } else {
+                    this.namePrefix = null;
+                }
+            } else {
+                this.apiUrl = null;
+                this.downloadUrl = null;
+                this.recommendedPartSize = null;
+                this.absoluteMinimumPartSize = null;
+                this.namePrefix = null;
+            }
+        }
+        else {
+            this.apiUrl = null;
+            this.downloadUrl = null;
+            this.recommendedPartSize = null;
+            this.absoluteMinimumPartSize = null;
+            this.namePrefix = null;
+        }
 
 		this.warnOnMissedKeys();
 	}
@@ -107,7 +135,7 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 	 *
 	 * @return the recommended part size for optimal upload performance
 	 */
-	public int getRecommendedPartSize() { return recommendedPartSize; }
+	public Integer getRecommendedPartSize() { return recommendedPartSize; }
 
 	/**
 	 * The smallest possible size of a part of a large file (except the last one).
@@ -116,14 +144,32 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 	 *
 	 * @return the absolute minimum part size for downloads
 	 */
-	public int getAbsoluteMinimumPartSize() { return absoluteMinimumPartSize; }
+	public Integer getAbsoluteMinimumPartSize() { return absoluteMinimumPartSize; }
 
-	public String getBucketId() { return bucketId; }
+	/**
+	 * Get the list of capabilities that this authorization token allows.
+	 * This field was added in API v4 to provide more fine-grained access control.
+	 *
+	 * @return the list of allowed capabilities for this authorization token
+	 */
+	public Set<String> getCapabilities() { return new HashSet<>(capabilities); }
 
-	public String getBucketName() { return bucketName; }
+	/**
+	 * Get the list of bucket IDs that this authorization token allows access to.
+	 * If null or empty, the token has access to all buckets.
+	 * This field was added in API v4 to provide more fine-grained access control.
+	 *
+	 * @return the set of allowed bucket IDs mapped to bucket name for this authorization token
+	 */
+	public Map<String, String> getBuckets() { return new HashMap<>(buckets); }
 
-	public Set<String> getCapabilities() { return capabilities; }
-
+	/**
+	 * Get the file name prefix that this authorization token allows access to.
+	 * If null, the token has access to all file names.
+	 * This field was added in API v4 to provide more fine-grained access control.
+	 *
+	 * @return the allowed file name prefix for this authorization token
+	 */
 	public String getNamePrefix() { return namePrefix; }
 
 	@Override
@@ -140,6 +186,12 @@ public class B2AuthorizeAccountResponse extends BaseB2Response {
 		stringBuilder.append(this.authorizationToken);
 		stringBuilder.append(", downloadUrl=");
 		stringBuilder.append(this.downloadUrl);
+		stringBuilder.append(", allowedCapabilities=");
+		stringBuilder.append(this.capabilities);
+		stringBuilder.append(", allowedBuckets=");
+		stringBuilder.append(this.buckets);
+		stringBuilder.append(", allowedNamePrefix=");
+		stringBuilder.append(this.namePrefix);
 		stringBuilder.append("]");
 		return stringBuilder.toString();
 	}
